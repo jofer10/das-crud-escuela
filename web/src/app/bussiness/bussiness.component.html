@@ -31,7 +31,7 @@
         </div>
     
         <!-- Botón Añadir Alumno -->
-        <button class="bg-indigo-600 text-white w-full md:w-60 px-6 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <button data-modal-target="modal-add-alumnos" data-modal-toggle="modal-add-alumnos" class="bg-indigo-600 text-white w-full md:w-60 px-6 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
           Añadir alumno
         </button>
       </div>
@@ -57,8 +57,8 @@
               <td class="py-4 pr-20 md:px-0 whitespace-nowrap text-sm text-gray-500">{{alumnos.alum_fec_registro}}</td>
               <td class="py-4 whitespace-nowrap text-sm text-indigo-600 hover:text-indigo-900">
                 <div class="inline-flex shadow-sm rounded-md w-full md:w-auto" role="group">
-                  <button type="button" class="w-full md:w-32 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-md hover:bg-green-500 hover:text-white focus:bg-green-600 focus:text-white active:bg-green-500 transition-colors duration-500">Editar</button>
-                  <button type="button" class="w-full md:w-32 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-red-500 hover:text-white focus:bg-red-600 focus:text-white active:bg-red-500 transition-colors duration-500">Eliminar</button>
+                  <button (click)="capturarDatos(alumnos);abrirModal()" class="w-full md:w-32 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-md hover:bg-green-500 hover:text-white focus:bg-green-600 focus:text-white active:bg-green-500 transition-colors duration-500">Editar</button>
+                  <button (click)="abrirModalEliminar(alumnos.alum_id)" type="button" class="w-full md:w-32 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-red-500 hover:text-white focus:bg-red-600 focus:text-white active:bg-red-500 transition-colors duration-500">Eliminar</button>
                 </div>
               </td>
             </tr>
@@ -67,3 +67,172 @@
       </div>
     </div>     
   </div>
+
+<!-- Modal para añadir alumnos -->
+<div id="modal-add-alumnos" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                    Añadir alumno
+                </h3>
+                <button data-modal-toggle="modal-add-alumnos" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->            
+            <form class="p-4 md:p-5" (submit)="f.form.valid && grabar(f)" #f="ngForm">
+              <div class="grid gap-6 mb-6 md:grid-cols-2">
+                  <div>
+                      <label for="nombres" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombres</label>
+                      <input type="text" id="nombres" name="nombres" [(ngModel)]="alumno.alum_nombres" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ej. John" required />
+                  </div>
+                  <div>
+                      <label for="apellidos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellidos</label>
+                      <input type="text" id="apellidos" name="apellidos" [(ngModel)]="alumno.alum_apellidos" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ej. Doe" required />
+                  </div>
+                  <div>
+                      <label for="codigo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Código</label>
+                      <input type="text" id="codigo" name="codigo" [(ngModel)]="alumno.alum_codigo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ej. U15306" required />
+                  </div>  
+                  <div>
+                      <label for="dni" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DNI</label>
+                      <input type="text" id="dni" name="dni" [(ngModel)]="alumno.alum_dni" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ej. 04352638" required />
+                  </div>
+              </div>
+              <button [disabled]="f.form.invalid" data-modal-toggle="modal-add-alumnos" class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:opacity-50 disabled:cursor-not-allowed">Registrar</button>
+            </form>
+
+        </div>
+    </div>
+</div> 
+
+<!-- Modal para editar alumnos -->
+<div *ngIf="validEdit" tabindex="-1" aria-hidden="true" class="fixed bg-gray-500 bg-opacity-75 top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto">
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <!-- Modal header -->
+          <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                  Editar alumno
+              </h3>
+              <button (click)="cerrarModal()" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                  </svg>
+                  <span class="sr-only">Close modal</span>
+              </button>
+          </div>
+          <!-- Modal body -->            
+          <form class="p-4 md:p-5" (submit)="f.form.valid && editar()">
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
+                <div>
+                    <label for="nombres" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombres</label>
+                    <input type="text" id="nombres" name="nombres" [(ngModel)]="alumno.alum_nombres" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ej. John" required />
+                </div>
+                <div>
+                    <label for="apellidos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellidos</label>
+                    <input type="text" id="apellidos" name="apellidos" [(ngModel)]="alumno.alum_apellidos" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ej. Doe" required />
+                </div>
+                <div>
+                    <label for="codigo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Código</label>
+                    <input type="text" id="codigo" name="codigo" [(ngModel)]="alumno.alum_codigo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ej. U15306" required />
+                </div>  
+                <div>
+                    <label for="dni" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DNI</label>
+                    <input type="text" id="dni" name="dni" [(ngModel)]="alumno.alum_dni" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ej. 04352638" required />
+                </div>
+            </div>
+            <button [disabled]="f.form.invalid" class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:opacity-50 disabled:cursor-not-allowed">Editar</button>
+          </form>
+
+      </div>
+  </div>
+</div> 
+
+<!-- Modal para eliminar alumnos -->
+<div *ngIf="isDelete" class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+  <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+    <!-- Cambié items-end a items-center -->
+    <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+      <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+        <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+          <div class="sm:flex sm:items-start">
+            <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+              <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+              </svg>
+            </div>
+            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+              <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Eliminar alumno</h3>
+              <div class="mt-2">
+                <p class="text-sm text-gray-500">¿Estás seguro de eliminar el registro? No podrás deshacer dicha operación.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+          <button (click)="eliminar()" type="button" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Eliminar</button>
+          <button (click)="cerrarModal()" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Para manejar cualquier error -->
+<div *ngIf="errorMsg" id="popup-modal" tabindex="-1" class="fixed bg-gray-500 bg-opacity-75 top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto">
+  <div class="relative p-4 w-full max-w-md max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 border border-gray-300 dark:border-gray-600"> <!-- Aquí he agregado un borde -->
+      <button (click)="cerrarModal()" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+      <div class="p-4 md:p-5 text-center">
+        <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+        </svg>
+        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">{{errorMsg}}</h3>
+        <button (click)="cerrarModal()" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Para manejar los mensajes de éxito -->
+<div *ngIf="mensaje" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-lg p-8 max-w-xs md:max-w-md w-full">
+    <div class="flex flex-col items-center">
+      <!-- Icono de éxito -->
+      <div class="bg-green-100 rounded-full p-3">
+        <svg class="w-6 h-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <!-- Texto de éxito -->
+      <h2 class="text-lg font-semibold mt-4">{{mensaje}}</h2>
+      <!-- <p class="text-gray-500 text-center mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.</p> -->
+    </div>
+    <!-- Botón de volver -->
+    <div class="mt-6 text-center">
+      <button (click)="cerrarModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg">
+        Aceptar
+      </button>
+    </div>
+  </div>
+</div>
+
+  
