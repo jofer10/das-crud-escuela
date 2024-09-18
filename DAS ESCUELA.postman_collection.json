@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "2138319f-180e-4767-a111-164a21582594",
+		"name": "DAS ESCUELA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31064417"
+	},
+	"item": [
+		{
+			"name": "Consultar alumnos",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"search\": \"vi\", \r\n    \"fec_ini\": \"10/09/2024\",\r\n    \"fec_fin\": \"10/09/2024\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:3000/api/alumnos",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"alumnos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Añadir alumno",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"alum_id\": 0,\r\n    \"alum_codigo\": \"A00017\",\r\n    \"alum_dni\": \"15628944\",\r\n    \"alum_apellidos\": \"Salazar Suarez\",\r\n    \"alum_nombres\": \"Daniel\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:3000/api/alumnos/add",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"alumnos",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar alumno",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"alum_id\": 21,\r\n    \"alum_codigo\": \"A00017\",\r\n    \"alum_dni\": \"15628945\",\r\n    \"alum_apellidos\": \"Salazar Suarez\",\r\n    \"alum_nombres\": \"Juan Daniel Alexander \"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:3000/api/alumnos/upd",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"alumnos",
+						"upd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar alumno",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:3000/api/alumnos/50",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"alumnos",
+						"50"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
