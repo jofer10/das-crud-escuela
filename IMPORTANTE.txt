@@ -1,0 +1,9 @@
+Si deseas conectarte a nuestra bd remota puedes ingresar con las siguientes crendenciales.
+
+NOTA: Tener en cuenta que el usuario está limitado, solo puedes realizar el CRUD
+
+BD REMOTA
+
+host: 34.123.241.183
+user: das
+pass: "?}z3n)k@Fz%L@a<
