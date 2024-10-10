@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AlumnoServicio } from '../services/operaciones/alumno.service';
 import { Alumno } from '../interface/alumno.model';
 import { NgForm } from '@angular/forms';
+import { AuthService } from '../services/operaciones/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bussiness',
@@ -28,7 +30,7 @@ export class BussinessComponent {
   isDelete: boolean = false;
   id: number;
 
-  constructor(private alumnoService: AlumnoServicio) {
+  constructor(private alumnoService: AlumnoServicio, private authService: AuthService, private router: Router) {
     // Fecha de hoy
     const hoy = new Date();
 
@@ -46,6 +48,9 @@ export class BussinessComponent {
     this.vl_fec_ini = `${arrayFecIni[2]}/${arrayFecIni[1]}/${arrayFecIni[0]}`;
     this.vl_fec_fin = `${arrayFecFin[2]}/${arrayFecFin[1]}/${arrayFecFin[0]}`;
     this.search = ``;
+    
+    const responseLogin = JSON.parse(authService.isLoggedIn()!)
+    console.log("Datos recibidos desde login - storage: "+responseLogin.per_nombre);
 
     alumnoService
       .obtenerAlumnos(this.search, this.vl_fec_ini, this.vl_fec_fin)
@@ -53,6 +58,11 @@ export class BussinessComponent {
         this.listAlumnos = res;
         console.log(this.listAlumnos);
       });
+  }
+
+  logout(){
+    this.authService.logout()
+    this.router.navigate(['login'])
   }
 
   cerrarModal() {

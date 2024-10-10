@@ -8,18 +8,22 @@ import { BussinessComponent } from './bussiness/bussiness.component';
 import { ApiAlumno } from './services/apis/api.alumnos.service';
 import { AlumnoServicio } from './services/operaciones/alumno.service';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
+import { Apilogin } from './services/apis/api.login.service';
+import { LoginService } from './services/operaciones/login.service';
+import { AuthService } from './services/operaciones/auth.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    BussinessComponent
+  declarations: [AppComponent, BussinessComponent, LoginComponent],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  providers: [
+    ApiAlumno,
+    Apilogin,
+    AlumnoServicio,
+    LoginService,
+    AuthService,
+    importProvidersFrom(HttpClientModule),
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule
-  ],
-  providers: [ApiAlumno, AlumnoServicio, importProvidersFrom(HttpClientModule)],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

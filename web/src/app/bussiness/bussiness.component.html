@@ -1,6 +1,13 @@
 <div class="container mx-auto p-4">
-    <!-- Para colocar un border => border-2 border-red-500 -->
-    <h1 class="text-2xl md:text-3xl font-bold mb-4">Gestión de alumnos</h1>
+  <div class="flex flex-col md:flex-row justify-between items-center mb-4 w-full md:w-auto">
+      <!-- Título (alineado a la izquierda en móviles) -->
+      <h1 class="text-left text-2xl md:text-3xl font-bold w-full md:w-auto mb-2 md:mb-0">Gestión de alumnos</h1>
+      
+      <!-- Botón Cerrar sesión (ajustado al mismo ancho que los botones de abajo en móviles) -->
+      <button (click)="logout()" class="bg-indigo-600 text-white w-full md:w-auto px-6 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          Cerrar sesión
+      </button>
+  </div>
   
     <div class="bg-white shadow rounded-lg p-6 overflow-x-auto">
       <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 w-full">
